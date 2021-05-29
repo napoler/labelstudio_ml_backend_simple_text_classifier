@@ -1,36 +1,91 @@
-# Jekyll GitBook
+## Quickstart
 
-Make Jelly site have a GitBook look!
+Build and start Machine Learning backend on `http://localhost:9090`
 
-## Demo
 
-[https://www.terrychan.org/jekyll-gitbook/](https://www.terrychan.org/jekyll-gitbook/)
+```
+docker build -t ml_backend_simple_text_classifier .
 
-## Why Jekyll with GitBook
 
-GitBook is an amazing frontend style to present and organize contents (such as book chapters
-and blogs) on Web. The typical to deploy GitBook at [Github Pages][1]
-is building HTML files locally and then push to Github repository, usually to the `gh-pages`
-branch. It's quite annoying to repeat such workload and make it hard for people do version
-control via git for when there are generated HTML files to be staged in and out.
+```
 
-This theme takes style definition out of generated GitBook site and provided the template
-for Jekyll to rendering markdown documents to HTML, thus the whole site can be deployed
-to [Github Pages][1] without generating and uploading HTML bundle every time when there are
-changes to the original repo.
+```bash
+docker-compose up
+```
 
-## How to Get Started
+Check if it works:
 
-This theme can be used just as other [Jekyll themes][1].
+```bash
+$ curl http://localhost:9090/health
+{"status":"UP"}
+```
 
-[Fork][3] this repository and add your markdown posts to the `_posts` folder.
+Then connect running backend to Label Studio:
 
-## License
+```bash
+label-studio start --init new_project --ml-backends http://localhost:9090 --template image_classification
+```
 
-This work is open sourced under the Apache License, Version 2.0.
 
-Copyright 2019 Tao He.
+## Writing your own model
+1. Place your scripts for model training & inference inside root directory. Follow the [API guidelines](#api-guidelines) described bellow. You can put everything in a single file, or create 2 separate one say `my_training_module.py` and `my_inference_module.py`
 
-[1]: https://pages.github.com
-[2]: https://pages.github.com/themes
-[3]: https://github.com/sighingnow/jekyll-gitbook/fork
+2. Write down your python dependencies in `requirements.txt`
+
+3. Open `wsgi.py` and make your configurations under `init_model_server` arguments:
+    ```python
+    from my_training_module import training_script
+    from my_inference_module import InferenceModel
+   
+    init_model_server(
+        create_model_func=InferenceModel,
+        train_script=training_script,
+        ...
+    ```
+
+4. Make sure you have docker & docker-compose installed on your system, then run
+    ```bash
+    docker-compose up --build
+    ```
+   
+## API guidelines
+
+
+#### Inference module
+In order to create module for inference, you have to declare the following class:
+
+```python
+from htx.base_model import BaseModel
+
+# use BaseModel inheritance provided by pyheartex SDK 
+class MyModel(BaseModel):
+    
+    # Describe input types (Label Studio object tags names)
+    INPUT_TYPES = ('Image',)
+
+    # Describe output types (Label Studio control tags names)
+    INPUT_TYPES = ('Choices',)
+
+    def load(self, resources, **kwargs):
+        """Here you load the model into the memory. resources is a dict returned by training script"""
+        self.model_path = resources["model_path"]
+        self.labels = resources["labels"]
+
+    def predict(self, tasks, **kwargs):
+        """Here you create list of model results with Label Studio's prediction format, task by task"""
+        predictions = []
+        for task in tasks:
+            # do inference...
+            predictions.append(task_prediction)
+        return predictions
+```
+
+#### Training module
+Training could be made in a separate environment. The only one convention is that data iterator and working directory are specified as input arguments for training function which outputs JSON-serializable resources consumed later by `load()` function in inference module.
+
+```python
+def train(input_iterator, working_dir, **kwargs):
+    """Here you gather input examples and output labels and train your model"""
+    resources = {"model_path": "some/model/path", "labels": ["aaa", "bbb", "ccc"]}
+    return resources
+```
