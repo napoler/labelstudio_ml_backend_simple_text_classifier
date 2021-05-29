@@ -1,5 +1,4 @@
 version: "3.5"
-
 services:
   redis:
     image: redis:alpine
@@ -10,8 +9,9 @@ services:
     expose:
       - 6379
   server:
-    container_name: server
-    build: .
+    container_name: labelstudio_ml_backend_simple_text_classifier
+    # build: .
+    image: napoler/labelstudio_ml_backend_simple_text_classifier
     environment:
       - MODEL_DIR=/data/models
       - RQ_QUEUE_NAME=default
