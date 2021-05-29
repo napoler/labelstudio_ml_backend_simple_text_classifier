@@ -262,7 +262,7 @@ class SimpleTextClassifier(LabelStudioMLBase):
         train_loader=DataLoader(trainDataset,batch_size=16,shuffle=True)
         test_loader=DataLoader(testDataset,batch_size=16)
         
-        trainer = pl.Trainer(max_epochs=3)
+        trainer = pl.Trainer(max_epochs=50)
         trainer.fit(self.model, train_loader,test_loader)
         model_file = os.path.join(workdir, 'model.pkl')
         torch.save(self.model.state_dict(),model_file)
