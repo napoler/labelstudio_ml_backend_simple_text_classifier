@@ -1,17 +1,21 @@
-FROM python:3.7
+# FROM python:3.7
+# FROM napoler/labelstudio_ml_backend_simple_text_classifier
+# FROM heartexlabs/label-studio
+FROM fnndsc/ubuntu-python3
 
 WORKDIR /tmp
 COPY requirements.txt .
 
-RUN pip install --no-cache \
-                -r requirements.txt \
-                uwsgi==2.0.19.1 \
-                supervisor==4.2.2 \
-                label-studio==1.0.1 \
-                git+https://github.com/heartexlabs/label-studio-ml-backend
+# COPY sources.list /etc/apt/
+
+RUN apt-get update && apt install redis-server git -y  && pip install --upgrade pip && pip install --no-cache  -r requirements.txt   uwsgi==2.0.19.1 supervisor==4.2.2  label-studio==1.0.1   git+https://github.com/heartexlabs/label-studio-ml-backend  
+# -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+                
+#  /etc/apt/sources.list /etc/apt/
 
 COPY uwsgi.ini /etc/uwsgi/
 COPY supervisord.conf /etc/supervisor/conf.d/
+
 
 WORKDIR /app
 
