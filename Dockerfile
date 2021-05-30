@@ -11,13 +11,14 @@ COPY requirements.txt .
 COPY environment.yml .
 # # COPY sources.list /etc/apt/
 # 激活环境
-RUN conda env create -f environment.yml
+RUN conda env create -f environment.yml --name myenv
 
 # Make RUN commands use the new environment:
-RUN echo "conda activate  label-studio-ml-backend" >> ~/.bashrc
+RUN echo "conda activate  myenv" >> ~/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 
-RUN conda activate label-studio-ml-backend && apt-get update && apt install git -y  && conda install --yes --file requirements.txt
+# 执行清理
+RUN apt-get update && apt install git -y  && conda install --yes --file requirements.txt && conda clean -a
 
 # RUN apt-get update && apt install git -y  && pip install --upgrade pip && pip install --no-cache  -r requirements.txt   uwsgi==2.0.19.1 supervisor==4.2.2  label-studio==1.0.1   git+https://github.com/heartexlabs/label-studio-ml-backend  
 # -i http://pypi.douban.com/simple --trusted-host pypi.douban.com

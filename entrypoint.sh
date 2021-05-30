@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # 激活环境
-conda activate  label-studio-ml-backend
+conda activate  myenv
 
 
 
