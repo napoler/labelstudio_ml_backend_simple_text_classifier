@@ -26,6 +26,14 @@ docker build -t condatest .
 ```
 
 
+## 测试运行
+
+docker run --rm -it napoler/labelstudio_ml_backend_simple_text_classifier:latest label-studio-ml start /app
+
+docker run --rm -it -p 0.0.0.0:9090:9090 napoler/labelstudio_ml_backend_simple_text_classifier:latest label-studio-ml start /app
+
+
+
 Check if it works:
 
 ```bash
