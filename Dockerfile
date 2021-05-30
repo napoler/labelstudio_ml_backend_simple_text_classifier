@@ -18,7 +18,7 @@ RUN echo "conda activate  myenv" >> ~/.bashrc
 SHELL ["/bin/bash", "--login", "-c"]
 
 # 执行清理
-RUN apt-get update && apt install git -y  && pip install --upgrade pip && pip install --no-cache  -r  requirements.txt  &&　pip install  git+https://github.com/heartexlabs/label-studio-ml-backend  && conda clean -a
+RUN apt-get update && apt install git -y  && pip install git+https://github.com/heartexlabs/label-studio-ml-backend  && pip install --no-cache  -r  requirements.txt  && conda clean -a
 
 # RUN apt-get update && apt install git -y  && pip install --upgrade pip && pip install --no-cache  -r requirements.txt   uwsgi==2.0.19.1 supervisor==4.2.2  label-studio==1.0.1   git+https://github.com/heartexlabs/label-studio-ml-backend  
 # -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
