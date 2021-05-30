@@ -15,7 +15,7 @@ docker-compose up
 
 
 
-docker run --name ml-class -d -it -p 9090 -v mldata:/app/ ml_backend_simple_text_classifierv2:latest
+docker run  -d -it -p 9090 -v mldata:/app/ napoler/labelstudio_ml_backend_simple_text_classifier:latest
 
 
 docker run -d -it -p 9090 -v mldata:/app/ napoler/labelstudio_ml_backend_simple_text_classifier
