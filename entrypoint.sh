@@ -6,6 +6,4 @@ set -euo pipefail
 # 激活环境
 conda activate  myenv
 
-
-
 exec label-studio-ml start /app
