@@ -20,6 +20,11 @@ docker run  -d -it -p 9090 -v mldata:/app/ napoler/labelstudio_ml_backend_simple
 
 docker run -d -it -p 9090 -v mldata:/app/ napoler/labelstudio_ml_backend_simple_text_classifier
 
+## 构建并测试
+```
+docker build -t condatest .
+```
+
 
 Check if it works:
 
