@@ -83,7 +83,7 @@ dependencies:
     - jsonschema==3.2.0
     - label-studio==1.0.1
     - label-studio-converter==0.0.28
-    - label-studio-ml==1.0.0
+    # - label-studio-ml @ git+https://github.com/heartexlabs/label-studio-ml-backend@1b0a186c87b52b4e992c9bcb022f85a1859c6617
     - local-attention==1.4.1
     - lockfile==0.12.2
     - lxml==4.6.3
