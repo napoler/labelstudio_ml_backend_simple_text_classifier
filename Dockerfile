@@ -1,10 +1,10 @@
 # FROM python:3.7
-# FROM napoler/labelstudio_ml_backend_simple_text_classifier
+FROM napoler/labelstudio_ml_backend_simple_text_classifier
 # FROM heartexlabs/label-studio
 # FROM fnndsc/ubuntu-python3
 # FROM ubuntu
 
-FROM continuumio/miniconda3
+# FROM continuumio/miniconda3
 
 
 WORKDIR /tmp
@@ -54,6 +54,6 @@ EXPOSE 9090
 # ENTRYPOINT ["/app/entrypoint.sh"]
 
 # RUN label-studio-ml start /app
-CMD [" label-studio-ml ", "start", "/app"]
+CMD ["conda", "run", "-n", "myenv"," label-studio-ml ", "start", "/app"]
 # ENTRYPOINT ["python", "run.py"]
 # label-studio-ml start /app
