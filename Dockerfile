@@ -6,15 +6,16 @@ FROM fnndsc/ubuntu-python3
 WORKDIR /tmp
 COPY requirements.txt .
 
-# COPY sources.list /etc/apt/
+# # COPY sources.list /etc/apt/
 
 RUN apt-get update && apt install redis-server git -y  && pip install --upgrade pip && pip install --no-cache  -r requirements.txt   uwsgi==2.0.19.1 supervisor==4.2.2  label-studio==1.0.1   git+https://github.com/heartexlabs/label-studio-ml-backend  
 # -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
-                
-#  /etc/apt/sources.list /etc/apt/
 
-COPY uwsgi.ini /etc/uwsgi/
-COPY supervisord.conf /etc/supervisor/conf.d/
+
+# RUN useradd redis &&
+
+# COPY uwsgi.ini /etc/uwsgi/
+# COPY supervisord.conf /etc/supervisor/conf.d/
 
 
 WORKDIR /app
@@ -23,4 +24,7 @@ COPY *.py /app/
 
 EXPOSE 9090
 
-CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD [" label-studio-ml ", "start", "/app"]
+
+# label-studio-ml start /app
