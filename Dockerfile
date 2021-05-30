@@ -40,6 +40,6 @@ EXPOSE 9090
 
 # CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # CMD [" label-studio-ml ", "start", "/app"]
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 # ENTRYPOINT ["python", "run.py"]
 # label-studio-ml start /app
