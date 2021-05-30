@@ -13,10 +13,10 @@ COPY environment.yml .
 # # COPY sources.list /etc/apt/
 # 激活环境
 RUN conda env create -f environment.yml --name myenv
-
+ENV PATH  /opt/conda/envs/myenv/bin:$PATH
 # # Make RUN commands use the new environment:
 RUN echo "conda activate  myenv" >> ~/.bashrc
-# ENV PATH = /opt/conda/envs/myenv/bin:$PATH
+
 # RUN conda activate myenv 
 
 SHELL ["/bin/bash", "--login", "-c"]
