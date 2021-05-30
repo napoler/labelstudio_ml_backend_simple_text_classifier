@@ -1,10 +1,10 @@
 # FROM python:3.7
-FROM napoler/labelstudio_ml_backend_simple_text_classifier
+#FROM napoler/labelstudio_ml_backend_simple_text_classifier
 # FROM heartexlabs/label-studio
 # FROM fnndsc/ubuntu-python3
 # FROM ubuntu
 
-# FROM continuumio/miniconda3
+FROM continuumio/miniconda3
 
 
 WORKDIR /tmp
@@ -13,7 +13,7 @@ COPY environment.yml .
 # # COPY sources.list /etc/apt/
 # 激活环境
 RUN conda env create -f environment.yml --name myenv
-# ENV PATH  /opt/conda/envs/myenv/bin:$PATH
+ENV PATH  /opt/conda/envs/myenv/bin:$PATH
 # # Make RUN commands use the new environment:
 RUN echo "conda activate  myenv" >> ~/.bashrc
 
