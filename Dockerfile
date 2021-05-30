@@ -1,10 +1,10 @@
 # FROM python:3.7
-FROM napoler/labelstudio_ml_backend_simple_text_classifier
+# FROM napoler/labelstudio_ml_backend_simple_text_classifier
 # FROM heartexlabs/label-studio
 # FROM fnndsc/ubuntu-python3
 # FROM ubuntu
 
-# FROM continuumio/miniconda3
+FROM continuumio/miniconda3
 
 
 WORKDIR /tmp
@@ -16,6 +16,9 @@ RUN conda env create -f environment.yml --name myenv
 
 # # Make RUN commands use the new environment:
 RUN echo "conda activate  myenv" >> ~/.bashrc
+# ENV PATH = /opt/conda/envs/myenv/bin:$PATH
+# RUN conda activate myenv 
+
 SHELL ["/bin/bash", "--login", "-c"]
 
 
@@ -35,8 +38,7 @@ RUN apt-get update && apt install git -y  && pip install git+https://github.com/
 # # COPY uwsgi.ini /etc/uwsgi/
 # # COPY supervisord.conf /etc/supervisor/conf.d/
 
-ENV PATH = /opt/conda/envs/myenv/bin:$PATH
-# RUN conda activate myenv 
+
 
 WORKDIR /app
 
