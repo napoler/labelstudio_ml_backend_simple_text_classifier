@@ -33,6 +33,9 @@ docker run --rm -it napoler/labelstudio_ml_backend_simple_text_classifier:latest
 docker run --rm -it -p 0.0.0.0:9090:9090 napoler/labelstudio_ml_backend_simple_text_classifier:latest label-studio-ml start /app
 
 
+label-studio-ml start /app --host=0.0.0.0 --port 9091
+
+
 
 Check if it works:
 
